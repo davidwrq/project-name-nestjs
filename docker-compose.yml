@@ -15,31 +15,28 @@ services:
     command: npm run start:dev
     env_file:
       - .env
-    networks:
-      - webnet
     depends_on:
-      # - redis
-      - postgres
-  # redis:
-  #   container_name: redis
-  #   image: redis:5
-  #   networks:
-  #     - webnet
-  postgres:
-    container_name: postgres
-    image: postgres:12
+      - mysql
     networks:
-      - webnet
+      - default
+      - backend
+
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.7
     environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_DB: ${DB_DATABASE_NAME}
-      PG_DATA: /var/lib/postgresql/data
-    ports:
-      - 5432:5432
+      MYSQL_ROOT_PASSWORD: ${SEQUELIZE_PASSWORD}
+      MYSQL_DATABASE: ${SEQUELIZE_DATABASE}
+
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mysql:/var/lib/mysql
+      - mysql_config:/etc/mysql
+    ports:
+      - 3306:3306
+volumes:  
+    mysql:
+    mysql_config:
+
 networks:
-  webnet:
-volumes:
-  pgdata:
+    backend:
+        name: ${DOCKER_NETWORK}

@@ -1,7 +1,8 @@
+
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class Photo {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -10,6 +11,9 @@ export class User {
 
   @Column('text')
   description: string;
+
+  @Column()
+  filename: string;
 
   @Column('int')
   views: number;
