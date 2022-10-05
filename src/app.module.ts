@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersModule } from './users/users.module';
+
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 
 
 @Module({
-  imports: [    TypeOrmModule.forRoot({
+  imports: [TypeOrmModule.forRoot({
     type: "mysql",
     host: process.env.SEQUELIZE_HOST,
     port: 3306,
@@ -17,8 +19,8 @@ import { User } from './users/entities/user.entity';
     entities: [User],
     synchronize: true,
     autoLoadEntities: true,
-  }),],
-  controllers: [AppController],
+  }),UsersModule],
+  controllers: [AppController,],
   providers: [AppService],
 })
 export class AppModule {}
