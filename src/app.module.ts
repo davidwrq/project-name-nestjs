@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -19,7 +20,7 @@ import { User } from './users/entities/user.entity';
     entities: [User],
     synchronize: true,
     autoLoadEntities: true,
-  }),UsersModule],
+  }),UsersModule, ConfigModule.forRoot()],
   controllers: [AppController,],
   providers: [AppService],
 })

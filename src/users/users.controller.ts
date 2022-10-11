@@ -4,10 +4,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Logger } from '@nestjs/common'
 
+import { ConfigService } from '@nestjs/config';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService, private configService: ConfigService) {}
   private logger = new Logger('InstiController')
 
   @Post()
@@ -18,7 +19,7 @@ export class UsersController {
   @Get()
   findAll() {
     this.logger.error('This is an error')
-    return this.usersService.findAll();
+    return  this.configService.get<string>('SEQUELIZE_HOST');;
   }
 
   @Get(':id')
